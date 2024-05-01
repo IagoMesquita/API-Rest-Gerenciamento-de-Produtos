@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Protuct {
+public class Product {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +14,10 @@ public class Protuct {
   private String name;
   private Double price;
 
-  public Protuct() {
+  public Product() {
   }
 
-  public Protuct(Long id, String name, Double price) {
+  public Product(Long id, String name, Double price) {
     this.id = id;
     this.name = name;
     this.price = price;
