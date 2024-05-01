@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.betrybe</groupId>
-	<artifactId>gerenciamento-de-protutos</artifactId>
+	<artifactId>gerenciamento-de-produtos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gerenciamento-de-protutos</name>
-	<description>Exercício para pratica de Spring com Java</description>
+	<name>gerenciamento-de-produtos</name>
+	<description>Exercício para prática de Spring com Java</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
