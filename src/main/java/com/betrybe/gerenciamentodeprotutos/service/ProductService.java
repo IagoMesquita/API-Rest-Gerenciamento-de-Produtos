@@ -50,5 +50,15 @@ public class ProductService {
 
   }
 
+  public Product removeProduct(Long productId)
+  throws ProductNotFoundException {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(ProductNotFoundException::new);
+
+    productRepository.delete(product);
+
+    return product;
+  }
+
 
 }
