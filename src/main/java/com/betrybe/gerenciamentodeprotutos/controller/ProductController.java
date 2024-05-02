@@ -1,5 +1,6 @@
 package com.betrybe.gerenciamentodeprotutos.controller;
 
+import com.betrybe.gerenciamentodeprotutos.dto.ProductCreationDto;
 import com.betrybe.gerenciamentodeprotutos.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.service.ProductService;
@@ -58,5 +59,14 @@ public class ProductController {
         .body(exception.getMessage());
   }
 
+  @PutMapping("/{productId}")
+  public ResponseEntity<Product> updateProduct(
+      @PathVariable Long productId,
+      @RequestBody ProductCreationDto productCreationDto
+  ) throws ProductNotFoundException {
+    return ResponseEntity.ok().body(
+        productService.updateProduct(productId, productCreationDto)
+    );
+  }
 
 }
