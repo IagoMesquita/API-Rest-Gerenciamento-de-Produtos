@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GerenciamentoDeProdutosApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GerenciamentoDeProdutosApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(GerenciamentoDeProdutosApplication.class, args);
+  }
 
 }
