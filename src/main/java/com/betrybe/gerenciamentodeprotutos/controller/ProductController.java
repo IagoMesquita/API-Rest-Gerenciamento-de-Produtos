@@ -1,6 +1,7 @@
 package com.betrybe.gerenciamentodeprotutos.controller;
 
-import com.betrybe.gerenciamentodeprotutos.dto.ProductCreationDto;
+import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductCreationDto;
+import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDto;
 import com.betrybe.gerenciamentodeprotutos.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.service.ProductService;
@@ -29,27 +30,30 @@ public class ProductController {
   }
 
   @PostMapping()
-  public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+  public ResponseEntity<ProductDto> createProduct(@RequestBody ProductCreationDto productCreationDto) {
+    Product product = productCreationDto.toEntity();
     return ResponseEntity.status(HttpStatus.CREATED).body(
-        productService.createProduct(product)
+        ProductDto
+            .fromEntity(productService.createProduct(product))
     );
   }
 
   @GetMapping
-  public ResponseEntity<List<Product>> findAllProduct() {
+  public ResponseEntity<List<ProductDto>> findAllProduct() {
     return ResponseEntity.ok().body(
         productService.getAllProducts()
+            .stream()
+            .map(ProductDto::fromEntity)
+            .toList()
     );
   }
 
   @GetMapping("/{productId}")
-  public ResponseEntity<Product> findProductById(@PathVariable Long productId)
+  public ResponseEntity<ProductDto> findProductById(@PathVariable Long productId)
       throws ProductNotFoundException {
     return ResponseEntity.ok().body(
-        productService.findProductById(productId)
+        ProductDto.fromEntity(productService.findProductById(productId))
     );
-
-
   }
 
 //  @ExceptionHandler
@@ -60,19 +64,21 @@ public class ProductController {
 //  }
 
   @PutMapping("/{productId}")
-  public ResponseEntity<Product> updateProduct(
+  public ResponseEntity<ProductDto> updateProduct(
       @PathVariable Long productId,
       @RequestBody ProductCreationDto productCreationDto
   ) throws ProductNotFoundException {
+    Product product = productCreationDto.toEntity();
+
     return ResponseEntity.ok().body(
-        productService.updateProduct(productId, productCreationDto)
+        ProductDto.fromEntity(productService.updateProduct(productId, product))
     );
   }
 
   @DeleteMapping("/{productId}")
-  public ResponseEntity<Product> removeProduct(Long productId) throws ProductNotFoundException {
+  public ResponseEntity<ProductDto> removeProduct(Long productId) throws ProductNotFoundException {
     return ResponseEntity.ok().body(
-        productService.removeProduct(productId)
+        ProductDto.fromEntity(productService.removeProduct(productId))
     );
   }
 }
