@@ -16,8 +16,7 @@ public class Brand {
   public Brand() {
   }
 
-  public Brand(Long id, String name) {
-    this.id = id;
+  public Brand(String name) {
     this.name = name;
   }
 
