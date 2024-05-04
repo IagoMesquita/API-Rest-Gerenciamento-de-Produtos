@@ -1,6 +1,6 @@
 package com.betrybe.gerenciamentodeprotutos.controller.dto;
 
-import com.betrybe.gerenciamentodeprotutos.entity.Category;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Category;
 
 public record CategoryCreationDto(String name) {
   public Category toEntity() {

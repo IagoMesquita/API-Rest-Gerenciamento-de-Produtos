@@ -1,9 +1,8 @@
 package com.betrybe.gerenciamentodeprotutos.service;
 
-import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductCreationDto;
-import com.betrybe.gerenciamentodeprotutos.entity.Product;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
-import com.betrybe.gerenciamentodeprotutos.repository.ProductRepository;
+import com.betrybe.gerenciamentodeprotutos.model.repository.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

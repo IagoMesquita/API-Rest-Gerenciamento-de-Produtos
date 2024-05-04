@@ -1,8 +1,8 @@
 package com.betrybe.gerenciamentodeprotutos.service;
 
-import com.betrybe.gerenciamentodeprotutos.entity.Category;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Category;
 import com.betrybe.gerenciamentodeprotutos.exceptions.CategoryNotFound;
-import com.betrybe.gerenciamentodeprotutos.repository.CategoryRepository;
+import com.betrybe.gerenciamentodeprotutos.model.repository.CategoryRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

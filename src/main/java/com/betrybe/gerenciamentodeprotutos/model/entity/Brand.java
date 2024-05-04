@@ -1,11 +1,13 @@
-package com.betrybe.gerenciamentodeprotutos.entity;
+package com.betrybe.gerenciamentodeprotutos.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "brands")
 public class Brand {
 
   @Id

@@ -1,12 +1,11 @@
 package com.betrybe.gerenciamentodeprotutos.service;
 
-import com.betrybe.gerenciamentodeprotutos.entity.Brand;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Brand;
 import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
-import com.betrybe.gerenciamentodeprotutos.repository.BrandRepository;
+import com.betrybe.gerenciamentodeprotutos.model.repository.BrandRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 public class BrandService {

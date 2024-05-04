@@ -2,7 +2,7 @@ package com.betrybe.gerenciamentodeprotutos.controller;
 
 import com.betrybe.gerenciamentodeprotutos.controller.dto.BrandCreationDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.BrandDto;
-import com.betrybe.gerenciamentodeprotutos.entity.Brand;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Brand;
 import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.service.BrandService;
 import java.util.List;

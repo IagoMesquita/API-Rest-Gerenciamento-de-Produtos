@@ -2,7 +2,6 @@ package com.betrybe.gerenciamentodeprotutos.controller;
 
 import com.betrybe.gerenciamentodeprotutos.controller.dto.CategoryCreationDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.CategoryDto;
-import com.betrybe.gerenciamentodeprotutos.entity.Category;
 import com.betrybe.gerenciamentodeprotutos.exceptions.CategoryNotFound;
 import com.betrybe.gerenciamentodeprotutos.service.CategoryService;
 import java.util.List;

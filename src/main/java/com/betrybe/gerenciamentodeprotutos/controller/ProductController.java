@@ -2,7 +2,7 @@ package com.betrybe.gerenciamentodeprotutos.controller;
 
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductCreationDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDto;
-import com.betrybe.gerenciamentodeprotutos.entity.Product;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.service.ProductService;
 import java.util.List;
