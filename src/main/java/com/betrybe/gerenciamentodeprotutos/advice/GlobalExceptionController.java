@@ -7,18 +7,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionController {
 
   @ExceptionHandler({
-    ProductNotFoundException.class,
-    BrandNotFoundException.class,
-    CategoryNotFound.class
+      ProductNotFoundException.class,
+      BrandNotFoundException.class,
+      CategoryNotFound.class
   })
-  public ResponseEntity<String> handleNotFoundExceptions(RuntimeException exception) {
+  public ResponseEntity<String> handleNotFoundExceptions(Exception exception) {
     return ResponseEntity
         .status(HttpStatus.NOT_FOUND)
         .body(exception.getMessage());
+  }
+
+  @ExceptionHandler(NoHandlerFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public String handleNotFoundRote(NoHandlerFoundException exception) {
+    return "Página não encontrada ou não existe.";
   }
 }
