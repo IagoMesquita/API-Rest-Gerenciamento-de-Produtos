@@ -1,11 +1,16 @@
 package com.betrybe.gerenciamentodeprotutos.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "product_details")
 public class ProductDetail {
 
   @Id
@@ -13,6 +18,10 @@ public class ProductDetail {
   private Long id;
   private Integer availableStock;
   private Double unitPrice;
+
+  @OneToOne
+  @JoinColumn(name = "product_id")
+  private Product product;
 
   public ProductDetail() {
   }
