@@ -1,6 +1,5 @@
 package com.betrybe.gerenciamentodeprotutos.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +18,7 @@ public class ProductDetail {
   private Integer availableStock;
   private Double unitPrice;
 
-  @OneToOne
+  @OneToOne(optional = false)
   @JoinColumn(name = "product_id")
   private Product product;
 
@@ -53,5 +52,13 @@ public class ProductDetail {
 
   public void setUnitPrice(Double unitPrice) {
     this.unitPrice = unitPrice;
+  }
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
   }
 }
