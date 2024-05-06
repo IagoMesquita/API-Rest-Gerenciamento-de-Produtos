@@ -1,7 +1,10 @@
 package com.betrybe.gerenciamentodeprotutos.controller;
 
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductCreationDto;
+import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsCreatingDto;
+import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDto;
+import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.service.ProductService;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,7 +34,8 @@ public class ProductController {
   }
 
   @PostMapping()
-  public ResponseEntity<ProductDto> createProduct(@RequestBody ProductCreationDto productCreationDto) {
+  public ResponseEntity<ProductDto> createProduct(
+      @RequestBody ProductCreationDto productCreationDto) {
     Product product = productCreationDto.toEntity();
     return ResponseEntity.status(HttpStatus.CREATED).body(
         ProductDto
@@ -80,5 +85,42 @@ public class ProductController {
     return ResponseEntity.ok().body(
         ProductDto.fromEntity(productService.removeProduct(productId))
     );
+  }
+
+  @PostMapping("/{productId}/details")
+  @ResponseStatus(HttpStatus.CREATED)
+  public ProductDetailsDto createProductDetail(
+      @PathVariable Long productId,
+      @RequestBody ProductDetailsCreatingDto productDetailsCreatingDto)
+      throws ProductNotFoundException {
+
+    return ProductDetailsDto.fromEntity(
+        productService.createProductDetail(productId, productDetailsCreatingDto.toEntity())
+    );
+  }
+
+  @GetMapping("/{productId}/details")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductDetailsDto getProductDetail(Long productId)
+      throws ProductDetailsNotFoundException, ProductNotFoundException {
+     return ProductDetailsDto.fromEntity(productService.getProductDetail(productId));
+  }
+
+  @PutMapping("/{productId}/details")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductDetailsDto updateProductDetail(
+      @PathVariable Long productId,
+      @RequestBody ProductDetailsCreatingDto productDetailsCreatingDto)
+      throws ProductDetailsNotFoundException, ProductNotFoundException {
+    return ProductDetailsDto.fromEntity(
+        productService.updateProductDetail(productId, productDetailsCreatingDto.toEntity())
+    );
+  }
+
+  @DeleteMapping("/{productId}/details")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductDetailsDto removeProductDetail(@PathVariable Long productId)
+      throws ProductNotFoundException, ProductDetailsNotFoundException {
+    return ProductDetailsDto.fromEntity(productService.removeProductDetail(productId));
   }
 }
