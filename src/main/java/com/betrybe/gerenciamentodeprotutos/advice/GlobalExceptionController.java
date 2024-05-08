@@ -2,6 +2,7 @@ package com.betrybe.gerenciamentodeprotutos.advice;
 
 import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.exceptions.CategoryNotFound;
+import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class GlobalExceptionController {
 
   @ExceptionHandler({
       ProductNotFoundException.class,
+      ProductDetailsNotFoundException.class,
       BrandNotFoundException.class,
       CategoryNotFound.class
   })
