@@ -4,6 +4,7 @@ import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductCreationDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsCreatingDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDto;
+import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
@@ -87,6 +88,7 @@ public class ProductController {
     );
   }
 
+  // Details OneToOne Products
   @PostMapping("/{productId}/details")
   @ResponseStatus(HttpStatus.CREATED)
   public ProductDetailsDto createProductDetail(
@@ -101,7 +103,7 @@ public class ProductController {
 
   @GetMapping("/{productId}/details")
   @ResponseStatus(HttpStatus.OK)
-  public ProductDetailsDto getProductDetail(Long productId)
+  public ProductDetailsDto getProductDetail(@PathVariable Long productId)
       throws ProductDetailsNotFoundException, ProductNotFoundException {
      return ProductDetailsDto.fromEntity(productService.getProductDetail(productId));
   }
@@ -123,4 +125,21 @@ public class ProductController {
       throws ProductNotFoundException, ProductDetailsNotFoundException {
     return ProductDetailsDto.fromEntity(productService.removeProductDetail(productId));
   }
+
+  // Brand OneToMany Products
+  @PutMapping("/{productId}/brands/{brandId}")
+  @ResponseStatus(HttpStatus.OK)
+  public ProductDto setProductBrand(
+      @PathVariable Long productId,
+      @PathVariable Long brandId) throws ProductNotFoundException, BrandNotFoundException {
+    return ProductDto.fromEntity(productService.setProductBrand(productId, brandId));
+  }
+
+  @DeleteMapping("/{productId}/brands")
+  @ResponseStatus(HttpStatus.OK)
+  private ProductDto removeProductBrand(@PathVariable Long productId)
+      throws ProductNotFoundException {
+    return ProductDto.fromEntity(productService.removeProductBrand(productId));
+  }
+
 }

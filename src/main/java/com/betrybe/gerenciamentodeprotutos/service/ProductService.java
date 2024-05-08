@@ -1,9 +1,12 @@
 package com.betrybe.gerenciamentodeprotutos.service;
 
+import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Brand;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.ProductDetail;
+import com.betrybe.gerenciamentodeprotutos.model.repository.BrandRepository;
 import com.betrybe.gerenciamentodeprotutos.model.repository.ProductDetailsRepository;
 import com.betrybe.gerenciamentodeprotutos.model.repository.ProductRepository;
 import java.util.List;
@@ -15,13 +18,17 @@ public class ProductService {
 
   private final ProductRepository productRepository;
   private final ProductDetailsRepository productDetailRepository;
+  private final BrandRepository brandRepository;
+
 
   @Autowired
   public ProductService(
       ProductRepository productRepository,
-      ProductDetailsRepository productDetailRepository) {
+      ProductDetailsRepository productDetailRepository,
+      BrandRepository brandRepository) {
     this.productRepository = productRepository;
     this.productDetailRepository = productDetailRepository;
+    this.brandRepository = brandRepository;
   }
 
   public Product createProduct(Product newProduct) {
@@ -64,12 +71,13 @@ public class ProductService {
 
     return product;
   }
-
+// ProductDetail OneToOne Product
   public ProductDetail createProductDetail(Long productId, ProductDetail productDetail)
       throws ProductNotFoundException {
     Product productFromDb = findProductById(productId);
 
-    productFromDb.setProductDetail(productDetail);
+    // Salvar o product em productDetail para gerar relação
+    productDetail.setProduct(productFromDb);
 
     return productDetailRepository.save(productDetail);
   }
@@ -123,5 +131,28 @@ public class ProductService {
     return productDetailFromDb;
   }
 
+  // Brand OneToMany Product
+  public Product setProductBrand(Long productId, Long brandId)
+      throws ProductNotFoundException, BrandNotFoundException {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(ProductNotFoundException::new);
+
+    Brand brand = brandRepository.findById(brandId)
+        .orElseThrow(BrandNotFoundException::new);
+
+    product.setBrand(brand);
+
+    return  productRepository.save(product);
+
+  }
+
+  public Product removeProductBrand(Long productId) throws ProductNotFoundException {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(ProductNotFoundException::new);
+
+    product.setBrand(null);
+
+    return productRepository.save(product);
+  }
 
 }
