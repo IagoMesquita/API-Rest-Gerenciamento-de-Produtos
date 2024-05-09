@@ -5,6 +5,7 @@ import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsCreating
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDetailsDto;
 import com.betrybe.gerenciamentodeprotutos.controller.dto.ProductDto;
 import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
+import com.betrybe.gerenciamentodeprotutos.exceptions.CategoryNotFound;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
@@ -105,7 +106,7 @@ public class ProductController {
   @ResponseStatus(HttpStatus.OK)
   public ProductDetailsDto getProductDetail(@PathVariable Long productId)
       throws ProductDetailsNotFoundException, ProductNotFoundException {
-     return ProductDetailsDto.fromEntity(productService.getProductDetail(productId));
+    return ProductDetailsDto.fromEntity(productService.getProductDetail(productId));
   }
 
   @PutMapping("/{productId}/details")
@@ -140,6 +141,29 @@ public class ProductController {
   private ProductDto removeProductBrand(@PathVariable Long productId)
       throws ProductNotFoundException {
     return ProductDto.fromEntity(productService.removeProductBrand(productId));
+  }
+
+  @PutMapping("/{productId}/categories/{categoryId}")
+  public ResponseEntity<ProductDto> setProductCategory(
+      @PathVariable Long productId,
+      @PathVariable Long categoryId) throws ProductNotFoundException, CategoryNotFound {
+
+    return ResponseEntity.ok().body(
+        ProductDto.fromEntity(
+            productService.setProductCategory(productId, categoryId)
+        )
+    );
+  }
+
+  @DeleteMapping("/{productId}/categories/{categoryId}")
+  public ResponseEntity<ProductDto> removeProductCategory(
+      @PathVariable Long productId,
+      @PathVariable Long categoryId) throws ProductNotFoundException, CategoryNotFound {
+    return ResponseEntity.ok().body(
+        ProductDto.fromEntity(
+            productService.removeProductCategory(productId, categoryId)
+        )
+    );
   }
 
 }

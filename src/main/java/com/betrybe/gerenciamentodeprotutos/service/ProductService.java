@@ -1,12 +1,15 @@
 package com.betrybe.gerenciamentodeprotutos.service;
 
 import com.betrybe.gerenciamentodeprotutos.exceptions.BrandNotFoundException;
+import com.betrybe.gerenciamentodeprotutos.exceptions.CategoryNotFound;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductDetailsNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Brand;
+import com.betrybe.gerenciamentodeprotutos.model.entity.Category;
 import com.betrybe.gerenciamentodeprotutos.model.entity.Product;
 import com.betrybe.gerenciamentodeprotutos.exceptions.ProductNotFoundException;
 import com.betrybe.gerenciamentodeprotutos.model.entity.ProductDetail;
 import com.betrybe.gerenciamentodeprotutos.model.repository.BrandRepository;
+import com.betrybe.gerenciamentodeprotutos.model.repository.CategoryRepository;
 import com.betrybe.gerenciamentodeprotutos.model.repository.ProductDetailsRepository;
 import com.betrybe.gerenciamentodeprotutos.model.repository.ProductRepository;
 import java.util.List;
@@ -20,15 +23,19 @@ public class ProductService {
   private final ProductDetailsRepository productDetailRepository;
   private final BrandRepository brandRepository;
 
+  private final CategoryRepository categoryRepository;
+
 
   @Autowired
   public ProductService(
       ProductRepository productRepository,
       ProductDetailsRepository productDetailRepository,
-      BrandRepository brandRepository) {
+      BrandRepository brandRepository,
+      CategoryRepository categoryRepository) {
     this.productRepository = productRepository;
     this.productDetailRepository = productDetailRepository;
     this.brandRepository = brandRepository;
+    this.categoryRepository = categoryRepository;
   }
 
   public Product createProduct(Product newProduct) {
@@ -63,7 +70,7 @@ public class ProductService {
   }
 
   public Product removeProduct(Long productId)
-  throws ProductNotFoundException {
+      throws ProductNotFoundException {
     Product product = productRepository.findById(productId)
         .orElseThrow(ProductNotFoundException::new);
 
@@ -71,7 +78,8 @@ public class ProductService {
 
     return product;
   }
-// ProductDetail OneToOne Product
+
+  // ProductDetail OneToOne Product
   public ProductDetail createProductDetail(Long productId, ProductDetail productDetail)
       throws ProductNotFoundException {
     Product productFromDb = findProductById(productId);
@@ -86,30 +94,30 @@ public class ProductService {
       throws ProductNotFoundException, ProductDetailsNotFoundException {
     Product productFromDb = findProductById(productId);
 
-   ProductDetail productDetail = productFromDb.getProductDetail();
+    ProductDetail productDetail = productFromDb.getProductDetail();
 
-   if (productDetail == null) {
-     throw new ProductDetailsNotFoundException();
-   }
+    if (productDetail == null) {
+      throw new ProductDetailsNotFoundException();
+    }
 
-   return productDetail;
+    return productDetail;
   }
 
   public ProductDetail updateProductDetail(Long productId, ProductDetail productDetail)
       throws ProductNotFoundException, ProductDetailsNotFoundException {
-      Product productFromDb = findProductById(productId);
+    Product productFromDb = findProductById(productId);
 
-      ProductDetail productDetailFromDb = productFromDb.getProductDetail();
+    ProductDetail productDetailFromDb = productFromDb.getProductDetail();
 
-      if (productDetail == null) {
-        throw  new ProductDetailsNotFoundException();
-      }
+    if (productDetail == null) {
+      throw new ProductDetailsNotFoundException();
+    }
 
-      productDetailFromDb.setProduct(productDetail.getProduct());
-      productDetailFromDb.setUnitPrice(productDetail.getUnitPrice());
-      productDetailFromDb.setAvailableStock(productDetail.getAvailableStock());
+    productDetailFromDb.setProduct(productDetail.getProduct());
+    productDetailFromDb.setUnitPrice(productDetail.getUnitPrice());
+    productDetailFromDb.setAvailableStock(productDetail.getAvailableStock());
 
-      return productDetailRepository.save(productDetailFromDb);
+    return productDetailRepository.save(productDetailFromDb);
   }
 
   public ProductDetail removeProductDetail(Long productId)
@@ -142,7 +150,7 @@ public class ProductService {
 
     product.setBrand(brand);
 
-    return  productRepository.save(product);
+    return productRepository.save(product);
 
   }
 
@@ -155,4 +163,28 @@ public class ProductService {
     return productRepository.save(product);
   }
 
+  // Category ManyToMany Products
+  public Product setProductCategory(Long productId, Long brandId)
+      throws ProductNotFoundException, CategoryNotFound {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(ProductNotFoundException::new);
+    Category category = categoryRepository.findById(brandId)
+        .orElseThrow(CategoryNotFound::new);
+
+    product.getCategories().add(category);
+
+    return productRepository.save(product);
+  }
+
+  public Product removeProductCategory(Long productId, Long categoryId)
+      throws ProductNotFoundException, CategoryNotFound {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(ProductNotFoundException::new);
+    Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(CategoryNotFound::new);
+
+    product.getCategories().remove(category);
+
+    return productRepository.save(product);
+  }
 }
